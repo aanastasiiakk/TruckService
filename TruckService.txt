@@ -1,0 +1,1238 @@
+///////////////////////////mainform
+using MaterialSkin;
+using MaterialSkin.Controls;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO;
+
+namespace trakservice
+{
+    public partial class mainform : MaterialForm
+    {
+        readonly MaterialSkin.MaterialSkinManager materialSkinManager;
+        public mainform(SqlConnection con)
+        {
+
+            this.con = con;
+            InitializeComponent();
+            var materialSkinManager = MaterialSkinManager.Instance;
+            materialSkinManager.AddFormToManage(this);
+            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+            materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.Red700, TextShade.WHITE);
+
+        }
+        public SqlConnection con;
+        private void ClearData()
+        {
+            materialMaskedTextBox1.Text = "";
+            materialMaskedTextBox2.Text = "";
+            materialTextBox3.Text = "";
+            materialTextBox4.Text = "";
+            materialTextBox5.Text = "";
+            materialTextBox6.Text = "";
+            materialTextBox7.Text = "";
+            materialTextBox8.Text = "";
+            materialTextBox9.Text = "";
+            materialTextBox10.Text = "";
+            materialTextBox11.Text = "";
+            materialTextBox12.Text = "";
+            materialTextBox13.Text = "";
+            materialTextBox14.Text = "";
+            materialTextBox15.Text = "";
+            materialTextBox16.Text = "";
+            materialTextBox17.Text = "";
+            materialTextBox18.Text = "";
+            materialTextBox19.Text = "";
+            materialTextBox20.Text = "";
+            materialTextBox21.Text = "";
+            materialTextBox22.Text = "";
+            materialTextBox23.Text = "";
+            materialTextBox24.Text = "";
+            materialTextBox25.Text = "";
+            materialTextBox26.Text = "";
+            materialTextBox27.Text = "";
+            materialTextBox28.Text = "";
+            materialTextBox29.Text = "";
+            materialComboBox1.SelectedItem = "";
+            materialComboBox2.SelectedItem = "";
+            materialComboBox3.SelectedItem = "";
+            materialComboBox4.SelectedItem = "";
+            materialComboBox5.SelectedItem = "";
+            materialComboBox6.SelectedItem = "";
+            materialComboBox7.SelectedItem = "";
+            id = 0;
+        }
+
+        private void mainform_Load(object sender, EventArgs e)
+        {
+            // TODO: This line of code loads data into the 'user127_dbDataSet.truck' table. You can move, or remove it, as needed.
+            this.truckTableAdapter.Fill(this.user127_dbDataSet.truck);
+            // TODO: This line of code loads data into the 'user127_dbDataSet.driver' table. You can move, or remove it, as needed.
+            this.driverTableAdapter.Fill(this.user127_dbDataSet.driver);
+            // TODO: This line of code loads data into the 'user127_dbDataSet.checkup' table. You can move, or remove it, as needed.
+            this.checkupTableAdapter.Fill(this.user127_dbDataSet.checkup);
+            // TODO: This line of code loads data into the 'user127_dbDataSet.doxod' table. You can move, or remove it, as needed.
+            this.doxodTableAdapter.Fill(this.user127_dbDataSet.doxod);
+            // TODO: This line of code loads data into the 'user127_dbDataSet.rout' table. You can move, or remove it, as needed.
+            this.routTableAdapter.Fill(this.user127_dbDataSet.rout);
+           
+
+            dataGridView1.Columns["idroutDataGridViewTextBoxColumn"].Visible = false;
+            dataGridView1.Columns["iddriverDataGridViewTextBoxColumn"].Visible = false;
+            dataGridView1.Columns["idtruckDataGridViewTextBoxColumn"].Visible = false;
+            dataGridView2.Columns["idroutDataGridViewTextBoxColumn1"].Visible = false;
+            dataGridView2.Columns["iddriverDataGridViewTextBoxColumn1"].Visible = false;
+            dataGridView2.Columns["fIODataGridViewTextBoxColumn1"].Visible = false;
+            dataGridView2.Columns["idtruckDataGridViewTextBoxColumn1"].Visible = false;
+            dataGridView2.Columns["gosnomerDataGridViewTextBoxColumn1"].Visible = false;
+            dataGridView2.Columns["startDataGridViewTextBoxColumn1"].Visible = false;
+            dataGridView2.Columns["finishDataGridViewTextBoxColumn1"].Visible = false;
+            dataGridView2.Columns["departurefromDataGridViewTextBoxColumn1"].Visible = false;
+            dataGridView2.Columns["departuretoDataGridViewTextBoxColumn1"].Visible = false;
+            dataGridView2.Columns["kmDataGridViewTextBoxColumn1"].Visible = false;
+            dataGridView2.Columns["betDataGridViewTextBoxColumn1"].Visible = false;
+            dataGridView2.Columns["startDataGridViewTextBoxColumn1"].Visible = false;
+            dataGridView3.Columns["iddoxodDataGridViewTextBoxColumn"].Visible = false;
+            dataGridView6.Columns["idtruckDataGridViewTextBoxColumn3"].Visible = false;
+            dataGridView5.Columns["iddriverDataGridViewTextBoxColumn2"].Visible = false;
+            dataGridView4.Columns["idcheckupDataGridViewTextBoxColumn"].Visible = false;
+            dataGridView4.Columns["idtruckDataGridViewTextBoxColumn2"].Visible = false;
+            dataGridView2.Columns[11].HeaderText = "Доход";
+            dataGridView2.Columns[12].HeaderText = "ГСМ";
+            
+            dataGridView2.Columns[14].HeaderText = "Заказчик";
+
+            String quertString = @"SELECT FIO FROM driver";
+            SqlCommand table = new SqlCommand(quertString, con);
+            con.Open();
+            SqlDataReader reader = table.ExecuteReader();
+
+            while (reader.Read())
+            {
+                materialComboBox1.Items.Add(reader[0].ToString());
+            }
+            reader.Close();
+            con.Close();
+
+            //гос знак
+            quertString = @"SELECT gos_nomer FROM truck";
+            table = new SqlCommand(quertString, con);
+            con.Open();
+            reader = table.ExecuteReader();
+
+            while (reader.Read())
+            {
+                materialComboBox2.Items.Add(reader[0].ToString());
+            }
+            reader.Close();
+            con.Close();
+
+            //гос знак
+            quertString = @"SELECT gos_nomer FROM truck";
+            table = new SqlCommand(quertString, con);
+            con.Open();
+            reader = table.ExecuteReader();
+
+            while (reader.Read())
+            {
+                materialComboBox7.Items.Add(reader[0].ToString());
+            }
+            reader.Close();
+            con.Close();
+            //////////////////////////////////////////////////// путевой лист
+            //ФИО водителя
+             quertString = @"SELECT FIO FROM driver";
+             table = new SqlCommand(quertString, con);
+            con.Open();
+             reader = table.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Expiditor.Items.Add(reader[0].ToString());
+            }
+            reader.Close();
+            con.Close();
+
+            //марка автомобиля
+            quertString = @"SELECT DISTINCT brand FROM truck";
+            table = new SqlCommand(quertString, con);
+            con.Open();
+            reader = table.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Marka.Items.Add(reader[0].ToString());
+            }
+            reader.Close();
+            con.Close();
+
+            //гос знак
+            quertString = @"SELECT gos_nomer FROM truck";
+            table = new SqlCommand(quertString, con);
+            con.Open();
+            reader = table.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Gos_znak.Items.Add(reader[0].ToString());
+            }
+            reader.Close();
+            con.Close();
+
+            //удостоверение номер
+            quertString = @"SELECT  numder FROM driver";
+            table = new SqlCommand(quertString, con);
+            con.Open();
+            reader = table.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Udostoverenie.Items.Add(reader[0].ToString());
+            }
+            reader.Close();
+            con.Close();
+
+            //Удостоверение класс
+            quertString = @"SELECT DISTINCT category FROM driver";
+            table = new SqlCommand(quertString, con);
+            con.Open();
+            reader = table.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Klass.Items.Add(reader[0].ToString());
+            }
+            reader.Close();
+            con.Close();
+
+            //прицеп гос знак
+            quertString = @"SELECT DISTINCT registr_number FROM truck";
+            table = new SqlCommand(quertString, con);
+            con.Open();
+            reader = table.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Pricep.Items.Add(reader[0].ToString());
+            }
+            reader.Close();
+            con.Close();
+
+            //заказчик
+            quertString = @"SELECT DISTINCT customer FROM rout";
+            table = new SqlCommand(quertString, con);
+            con.Open();
+            reader = table.ExecuteReader();
+
+            while (reader.Read())
+            {
+                zakazchik.Items.Add(reader[0].ToString());
+            }
+            reader.Close();
+            con.Close();
+
+            //дата прибытия 
+            quertString = @"SELECT DISTINCT start FROM rout";
+            table = new SqlCommand(quertString, con);
+            con.Open();
+            reader = table.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Data_pribitia.Items.Add(reader[0].ToString());
+            }
+            reader.Close();
+            con.Close();
+
+            //адрес погрузки
+            quertString = @"SELECT DISTINCT departure_from FROM rout";
+            table = new SqlCommand(quertString, con);
+            con.Open();
+            reader = table.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Mesto_pogruzki.Items.Add(reader[0].ToString());
+            }
+            reader.Close();
+            con.Close();
+
+            //адрес отгрузки
+            quertString = @"SELECT DISTINCT departure_to FROM rout";
+            table = new SqlCommand(quertString, con);
+            con.Open();
+            reader = table.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Mesto_razgruzki.Items.Add(reader[0].ToString());
+            }
+            reader.Close();
+            con.Close();
+
+            //наименование груза material текст бокс31
+            // номер путевого литса material текст бокс30
+
+            //расстояние
+            quertString = @"SELECT DISTINCT km FROM rout";
+            table = new SqlCommand(quertString, con);
+            con.Open();
+            reader = table.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Rasstoyanie.Items.Add(reader[0].ToString());
+            }
+            reader.Close();
+            con.Close();
+
+            //сумма на топливо
+            quertString = @"SELECT DISTINCT GSM FROM rout";
+            table = new SqlCommand(quertString, con);
+            con.Open();
+            reader = table.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Summa_gsm.Items.Add(reader[0].ToString());
+            }
+            reader.Close();
+            con.Close();
+            //////////////////////////////
+
+        }
+
+        private void materialButton1_Click(object sender, EventArgs e)
+        { 
+            try
+            {
+                if (materialComboBox1.SelectedItem == "")
+                {
+                    MessageBox.Show(("Поле ФИО пустое"), "Сообщение");
+                }
+                else if (materialComboBox2.SelectedItem == "")
+                {
+                    MessageBox.Show(("Поле гос номер пустое"), "Сообщение");
+                }
+                else if (materialMaskedTextBox2.Text.Length > 10 || materialMaskedTextBox2.Text.Length < 10)
+                {
+                    MessageBox.Show(("Поле дата окончания заполнено некорректно"), "Сообщение");
+                }
+                else if (materialMaskedTextBox1.Text.Length > 10 || materialMaskedTextBox1.Text.Length < 10)
+                {
+                    MessageBox.Show(("Поле дата начала заполнено некорректно"), "Сообщение");
+                }
+                else if (materialComboBox5.SelectedItem == "")
+                {
+                    MessageBox.Show(("Поле период пустое"), "Сообщение");
+                }
+                else if (materialComboBox6.SelectedItem == "")
+                {
+                    MessageBox.Show(("Поле заказчик пустое"), "Сообщение");
+                }
+                else if (!(materialTextBox3.Text.Any(Char.IsDigit)))
+                {
+                    MessageBox.Show(("Поле длина пути должно содержать цифры"), "Сообщение");
+                }
+                else if (!(materialTextBox4.Text.Any(Char.IsDigit)))
+                {
+                    MessageBox.Show(("Поле ставка должно содержать цифры"), "Сообщение");
+                }
+                else
+                {
+                    int sum = 0, gsm = 0;
+                    sum = Convert.ToInt32(materialTextBox3.Text) * Convert.ToInt32(materialTextBox4.Text);
+                    gsm = (Convert.ToInt32(materialTextBox3.Text) / 10) * 41;
+
+                    materialTextBox5.Text = sum.ToString();
+                    materialTextBox6.Text = gsm.ToString();
+
+                    string connect = "data source=stud-mssql.sttec.yar.ru,38325;initial catalog=user127_db;persist security info=True;user id=user127_db;password=user127;MultipleActiveResultSets=True;App=EntityFramework";
+
+                    SqlConnection myConnection = new SqlConnection(@connect);
+
+                    myConnection.Open();
+
+                    string command = "Select id_rout, FIO, gos_nomer, start, finish, departure_from, departure_to, km, bet, doxod, GSM, period, customer  from rout where FIO='" + materialComboBox1.SelectedItem + "' and gos_nomer='" + materialComboBox2.SelectedItem + "' and start='" + materialMaskedTextBox1.Text + "' and finish='" + materialMaskedTextBox2.Text + "' and departure_from='" + materialComboBox3.SelectedItem + "' and departure_to='" + materialComboBox4.SelectedItem + "' and km='" + materialTextBox3.Text + "' and bet='" + materialTextBox4.Text + "' and doxod='" + materialTextBox5.Text + "' and GSM='" + materialTextBox6.Text + "' and period='" + materialComboBox5.SelectedItem + "' and customer='" + materialComboBox6.SelectedItem + "'";
+
+                    string sInsSql = "Insert into rout(FIO,gos_nomer,start,finish,departure_from, departure_to, km, bet, doxod, GSM, period, customer) Values('{0}', '{1}', '{2}', '{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}')";
+
+                    string FIO = (string)materialComboBox1.SelectedItem;
+                    string gos_nomer = (string)materialComboBox2.SelectedItem;
+                    string start = materialMaskedTextBox1.Text;
+                    string finish = materialMaskedTextBox2.Text;
+                    string departure_from = (string)materialComboBox3.SelectedItem;
+                    string departure_to = (string)materialComboBox4.SelectedItem;
+                    string km = materialTextBox3.Text;
+                    string bet = materialTextBox4.Text;
+                    string doxod = materialTextBox5.Text;
+                    string GSM = materialTextBox6.Text;
+                    string period = (string)materialComboBox5.SelectedItem;
+                    string customer = (string)materialComboBox6.SelectedItem;
+
+                    string sInsSotr = string.Format(sInsSql, FIO, gos_nomer, start, finish, departure_from, departure_to, km, bet, doxod, GSM, period, customer);
+
+                    SqlCommand cmdIns = new SqlCommand(sInsSotr, myConnection);
+
+                    cmdIns.ExecuteNonQuery();
+
+                    MessageBox.Show(string.Format($"{FIO} зпаись успешно добавлена"), "Сообщение");
+
+                    myConnection.Close();
+
+                    this.routTableAdapter.Fill(this.user127_dbDataSet.rout);
+                    this.routTableAdapter.Update(this.user127_dbDataSet.rout);
+                    ClearData();
+                }
+            }
+            catch { MessageBox.Show("Ошибка. Проверьте соединение."); }   
+          
+        }
+        int id;
+
+        private void materialButton2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string connectionString = @"data source=stud-mssql.sttec.yar.ru,38325;initial catalog=user127_db;persist security info=True;user id=user127_db;password=user127;MultipleActiveResultSets=True;App=EntityFramework";
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    SqlCommand com = new SqlCommand("UPDATE rout SET FIO=@FIO,gos_nomer=@gos_nomer, start=@start,finish=@finish,departure_from=@departure_from,departure_to=@departure_to,km=@km,bet=@bet ,doxod=@doxod,GSM=@GSM,period=@period,customer=@customer  WHERE id_rout=@id", con);
+
+                    con.Open();
+                    com.Parameters.AddWithValue("@id", id);
+                    com.Parameters.AddWithValue("@FIO", materialComboBox1.SelectedItem);
+                    com.Parameters.AddWithValue("@gos_nomer", materialComboBox2.SelectedItem);
+                    com.Parameters.AddWithValue("@start", materialMaskedTextBox1.Text);
+                    com.Parameters.AddWithValue("@finish", materialMaskedTextBox2.Text);
+                    com.Parameters.AddWithValue("@departure_from", materialComboBox3.SelectedItem);
+                    com.Parameters.AddWithValue("@departure_to", materialComboBox4.SelectedItem);
+                    com.Parameters.AddWithValue("@km", materialTextBox3.Text);
+                    com.Parameters.AddWithValue("@bet", materialTextBox4.Text);
+                    com.Parameters.AddWithValue("@doxod", materialTextBox5.Text);
+                    com.Parameters.AddWithValue("@GSM", materialTextBox6.Text);
+                    com.Parameters.AddWithValue("@period", materialComboBox5.SelectedItem);
+                    com.Parameters.AddWithValue("@customer", materialComboBox6.SelectedItem);
+                    com.ExecuteNonQuery();
+                    MessageBox.Show("Запись успешно изменена");
+                    con.Close();
+                    this.routTableAdapter.Fill(this.user127_dbDataSet.rout);
+                    this.routTableAdapter.Update(this.user127_dbDataSet.rout);
+                    ClearData();
+                }
+            }
+            catch { MessageBox.Show("Ошибка. Проверьте соединение."); }
+        }
+
+        private void materialButton3_Click(object sender, EventArgs e)
+        {
+            string connectionString = @"data source=stud-mssql.sttec.yar.ru,38325;initial catalog=user127_db;persist security info=True;user id=user127_db;password=user127;MultipleActiveResultSets=True;App=EntityFramework";
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand com = new SqlCommand("DELETE FROM rout WHERE id_rout=@id", con);
+                int id = int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString());
+                com.Parameters.AddWithValue("@id", id);
+                con.Open(); //Открываем подключение
+
+                try
+                {
+                    com.ExecuteNonQuery();
+                    MessageBox.Show("Запись удалена");
+                    this.routTableAdapter.Fill(this.user127_dbDataSet.rout);
+                    this.routTableAdapter.Update(this.user127_dbDataSet.rout);
+                    this.Refresh();
+                    Application.DoEvents();
+                }
+                catch
+                {
+                    MessageBox.Show("Удалить не удалось!");
+                }
+            }
+        }
+
+        private void dataGridView1_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
+            materialComboBox1.SelectedItem = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
+            materialComboBox2.SelectedItem = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
+            materialMaskedTextBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString();
+            materialMaskedTextBox2.Text = dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString();
+            materialComboBox3.SelectedItem = dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString();
+            materialComboBox4.SelectedItem = dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString();
+            materialTextBox3.Text = dataGridView1.Rows[e.RowIndex].Cells[9].Value.ToString();
+            materialTextBox4.Text = dataGridView1.Rows[e.RowIndex].Cells[10].Value.ToString();
+            materialTextBox5.Text = dataGridView1.Rows[e.RowIndex].Cells[11].Value.ToString();
+            materialTextBox6.Text = dataGridView1.Rows[e.RowIndex].Cells[12].Value.ToString();
+            materialComboBox5.SelectedItem = dataGridView1.Rows[e.RowIndex].Cells[13].Value.ToString();
+            materialComboBox6.SelectedItem = dataGridView1.Rows[e.RowIndex].Cells[14].Value.ToString();
+        }
+
+        private void materialTextBox7_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void materialButton4_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (materialComboBox8.SelectedItem == "")
+                {
+                    MessageBox.Show("Вы не выбрали месяц");
+                }
+                else
+                {
+                    int sum = 0, gsm = 0;
+                    double prochent = 0.15;
+                    for (int i = 0; i < dataGridView2.Rows.Count; ++i)
+                    {
+                        sum += Convert.ToInt32(dataGridView2.Rows[i].Cells[11].Value);
+                        gsm += Convert.ToInt32(dataGridView2.Rows[i].Cells[12].Value);
+                    }
+                    double full = (sum - gsm) * prochent;
+                    double a = sum - gsm;
+                    double b = a - full;
+                    materialTextBox9.Text = b.ToString();
+                    materialTextBox8.Text = sum.ToString();
+                }
+            }
+            catch { MessageBox.Show("Ошибка. Проверьте соединение."); }
+        }
+
+        private void materialButton5_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string connect = "data source=stud-mssql.sttec.yar.ru,38325;initial catalog=user127_db;persist security info=True;user id=user127_db;password=user127;MultipleActiveResultSets=True;App=EntityFramework";
+
+                SqlConnection myConnection = new SqlConnection(@connect);
+
+                myConnection.Open();
+
+                string command = "Select id_doxod, period, summ  from doxod where period='" + materialComboBox8.SelectedItem + "' and summ='" + materialTextBox9.Text + "'";
+
+                string sInsSql = "Insert into doxod( period, summ) Values('{0}', '{1}')";
+
+                string period = (string)materialComboBox8.SelectedItem;
+                string summ = materialTextBox9.Text;
+
+                string sInsSotr = string.Format(sInsSql, period, summ);
+
+                SqlCommand cmdIns = new SqlCommand(sInsSotr, myConnection);
+
+                cmdIns.ExecuteNonQuery();
+
+                MessageBox.Show(string.Format($"{period} зпаись успешно добавлена"), "Сообщение");
+
+                myConnection.Close();
+
+                this.doxodTableAdapter.Fill(this.user127_dbDataSet.doxod);
+                this.doxodTableAdapter.Update(this.user127_dbDataSet.doxod);
+                ClearData();
+            }
+            catch { MessageBox.Show("Ошибка. Проверьте соединение."); }
+        }
+
+        private void materialButton7_Click(object sender, EventArgs e)
+        {
+            string connectionString = @"data source=stud-mssql.sttec.yar.ru,38325;initial catalog=user127_db;persist security info=True;user id=user127_db;password=user127;MultipleActiveResultSets=True;App=EntityFramework";
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand com = new SqlCommand("DELETE FROM doxod WHERE id_doxod=@id", con);
+                int id = int.Parse(dataGridView3.CurrentRow.Cells[0].Value.ToString());
+                com.Parameters.AddWithValue("@id", id);
+                con.Open();
+
+                try
+                {
+                    com.ExecuteNonQuery();
+                    MessageBox.Show("Запись удалена");
+                    this.doxodTableAdapter.Fill(this.user127_dbDataSet.doxod);
+                    this.doxodTableAdapter.Update(this.user127_dbDataSet.doxod);
+                    this.Refresh();
+                    Application.DoEvents();
+                }
+                catch
+                {
+                    MessageBox.Show("Удалить не удалось!");
+                }
+            }
+        }
+
+        private void materialButton6_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (materialTextBox10.Text == "")
+                {
+                    MessageBox.Show(("Поле рег. номер пустое"), "Сообщение");
+                }
+                else if (materialTextBox11.Text == "")
+                {
+                    MessageBox.Show(("Поле марка пустое"), "Сообщение");
+                }
+                else if (materialTextBox12.Text == "")
+                {
+                    MessageBox.Show(("Поле VIN номер пустое"), "Сообщение");
+                }
+                else if (materialTextBox13.Text == "")
+                {
+                    MessageBox.Show(("Поле прицеп пустое"), "Сообщение");
+                }
+                else if (materialTextBox14.Text == "")
+                {
+                    MessageBox.Show(("Поле VIN номер прицепа"), "Сообщение");
+                }
+
+                else
+                {
+
+                    string connect = "data source=stud-mssql.sttec.yar.ru,38325;initial catalog=user127_db;persist security info=True;user id=user127_db;password=user127;MultipleActiveResultSets=True;App=EntityFramework";
+
+                    SqlConnection myConnection = new SqlConnection(@connect);
+
+                    myConnection.Open();
+
+                    string command = "Select id_truck, gos_nomer, brand, VIN, pricep, registr_number   from truck where gos_nomer='" + materialTextBox10.Text + "' and brand='" + materialTextBox11.Text + "' and VIN='" + materialTextBox12.Text + "' and pricep='" + materialTextBox13.Text + "' and registr_number='" + materialTextBox14.Text + "'";
+
+                    string sInsSql = "Insert into truck(gos_nomer, brand, VIN, pricep, registr_number) Values('{0}', '{1}', '{2}', '{3}','{4}')";
+
+                    string gos_nomer = materialTextBox10.Text;
+                    string brand = materialTextBox11.Text;
+                    string VIN = materialTextBox12.Text;
+                    string pricep = materialTextBox13.Text;
+                    string registr_number = materialTextBox14.Text;
+
+                    string sInsSotr = string.Format(sInsSql, gos_nomer, brand, VIN, pricep, registr_number);
+
+                    SqlCommand cmdIns = new SqlCommand(sInsSotr, myConnection);
+
+                    cmdIns.ExecuteNonQuery();
+
+                    MessageBox.Show(string.Format($"{gos_nomer} зпаись успешно добавлена"), "Сообщение");
+
+                    myConnection.Close();
+
+                    this.truckTableAdapter.Fill(this.user127_dbDataSet.truck);
+                    this.truckTableAdapter.Update(this.user127_dbDataSet.truck);
+                    ClearData();
+                }
+            }
+            catch { MessageBox.Show("Ошибка. Проверьте соединение."); }
+        }
+
+        private void materialButton8_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string connectionString = @"data source=stud-mssql.sttec.yar.ru,38325;initial catalog=user127_db;persist security info=True;user id=user127_db;password=user127;MultipleActiveResultSets=True;App=EntityFramework";
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    SqlCommand com = new SqlCommand("UPDATE truck SET gos_nomer=@gos_nomer,brand=@brand, VIN=@VIN,pricep=@pricep,registr_number=@registr_number  WHERE id_truck=@id", con);
+
+                    con.Open();
+                    com.Parameters.AddWithValue("@id", id);
+                    com.Parameters.AddWithValue("@gos_nomer", materialTextBox10.Text);
+                    com.Parameters.AddWithValue("@brand", materialTextBox11.Text);
+                    com.Parameters.AddWithValue("@VIN", materialTextBox12.Text);
+                    com.Parameters.AddWithValue("@pricep", materialTextBox13.Text);
+                    com.Parameters.AddWithValue("@registr_number", materialTextBox14.Text);
+
+                    com.ExecuteNonQuery();
+                    MessageBox.Show("Запись успешно изменена");
+                    con.Close();
+                    this.truckTableAdapter.Fill(this.user127_dbDataSet.truck);
+                    this.truckTableAdapter.Update(this.user127_dbDataSet.truck);
+                    ClearData();
+                }
+            }
+            catch { MessageBox.Show("Ошибка. Проверьте соединение."); }
+        }
+
+        private void materialButton9_Click(object sender, EventArgs e)
+        {
+            string connectionString = @"data source=stud-mssql.sttec.yar.ru,38325;initial catalog=user127_db;persist security info=True;user id=user127_db;password=user127;MultipleActiveResultSets=True;App=EntityFramework";
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand com = new SqlCommand("DELETE FROM truck WHERE id_truck=@id", con);
+                int id = int.Parse(dataGridView6.CurrentRow.Cells[0].Value.ToString());
+                com.Parameters.AddWithValue("@id", id);
+                con.Open(); //Открываем подключение
+
+                try
+                {
+                    com.ExecuteNonQuery();
+                    MessageBox.Show("Запись удалена");
+                    this.truckTableAdapter.Fill(this.user127_dbDataSet.truck);
+                    this.truckTableAdapter.Update(this.user127_dbDataSet.truck);
+                    this.Refresh();
+                    Application.DoEvents();
+                }
+                catch
+                {
+                    MessageBox.Show("Удалить не удалось!");
+                }
+            }
+        }
+
+        private void dataGridView6_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            id = Convert.ToInt32(dataGridView6.Rows[e.RowIndex].Cells[0].Value.ToString());
+            materialTextBox10.Text = dataGridView6.Rows[e.RowIndex].Cells[1].Value.ToString();
+            materialTextBox11.Text = dataGridView6.Rows[e.RowIndex].Cells[2].Value.ToString();
+            materialTextBox12.Text = dataGridView6.Rows[e.RowIndex].Cells[3].Value.ToString();
+            materialTextBox13.Text = dataGridView6.Rows[e.RowIndex].Cells[4].Value.ToString();
+            materialTextBox14.Text = dataGridView6.Rows[e.RowIndex].Cells[5].Value.ToString();
+        }
+
+        private void materialButton10_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (materialTextBox17.Text == "")
+                {
+                    MessageBox.Show(("Поле кем выдан пустое"), "Сообщение");
+                }
+                else if (!(materialTextBox16.Text.Any(Char.IsDigit)))
+                {
+                    MessageBox.Show(("Поле серия номер должно содержать цифры"), "Сообщение");
+                }
+                else if (materialTextBox18.Text == "")
+                {
+                    MessageBox.Show(("Поле адрес регистрации пустое"), "Сообщение");
+                }
+                else if (materialTextBox19.Text == "")
+                {
+                    MessageBox.Show(("Поле фактический адрес пустое"), "Сообщение");
+                }
+                else if (materialMaskedTextBox5.Text.Length > 10 || materialMaskedTextBox5.Text.Length < 10)
+                {
+                    MessageBox.Show(("Поле дата выдачи заполнено некорректно"), "Сообщение");
+                }
+                else if (materialMaskedTextBox6.Text.Length > 10 || materialMaskedTextBox6.Text.Length < 10)
+                {
+                    MessageBox.Show(("Поле дата окончания заполнено некорректно"), "Сообщение");
+                }
+                else if (!(materialTextBox23.Text.Any(Char.IsDigit)))
+                {
+                    MessageBox.Show(("Поле номер в/у должно содержать  цифры"), "Сообщение");
+                }
+                else if (!(materialTextBox20.Text.Any(Char.IsDigit)))
+                {
+                    MessageBox.Show(("Поле в/у должно содержать цифры"), "Сообщение");
+                }
+                else if (!(materialTextBox15.Text.Any(Char.IsLetter)))
+                {
+                    MessageBox.Show(("Поле ФИО должно содержать только буквы"), "Сообщение");
+                }
+                else
+                {
+                    string connect = "data source=stud-mssql.sttec.yar.ru,38325;initial catalog=user127_db;persist security info=True;user id=user127_db;password=user127;MultipleActiveResultSets=True;App=EntityFramework";
+
+                    SqlConnection myConnection = new SqlConnection(@connect);
+
+                    myConnection.Open();
+
+                    string command = "Select id_driver, FIO, seria_nomer, kem_vydan, adress_reg, adress_fact, driver_license, start_day, end_day, numder, GIBDD, category from driver where FIO='" + materialTextBox15.Text + "' and seria_nomer='" + materialTextBox16.Text + "' and kem_vydan='" + materialTextBox17.Text + "' and adress_reg='" + materialTextBox18.Text + "' and adress_fact='" + materialTextBox19.Text + "' and driver_license='" + materialTextBox20.Text + "'and start_day='" + materialMaskedTextBox5.Text + "'and end_day='" + materialMaskedTextBox6.Text + "'and numder='" + materialTextBox23.Text + "'and GIBDD='" + materialTextBox24.Text + "'and category='" + materialTextBox25.Text + "'";
+
+                    string sInsSql = "Insert into driver(FIO, seria_nomer, kem_vydan, adress_reg, adress_fact, driver_license, start_day, end_day, numder, GIBDD, category) Values('{0}', '{1}', '{2}', '{3}','{4}', '{5}', '{6}', '{7}', '{8}','{9}','{10}')";
+
+                    string FIO = materialTextBox15.Text;
+                    string seria_nomer = materialTextBox16.Text;
+                    string kem_vydan = materialTextBox17.Text;
+                    string adress_reg = materialTextBox18.Text;
+                    string adress_fact = materialTextBox19.Text;
+                    string driver_license = materialTextBox20.Text;
+                    string start_day = materialMaskedTextBox5.Text;
+                    string end_day = materialMaskedTextBox6.Text;
+                    string numder = materialTextBox23.Text;
+                    string GIBDD = materialTextBox24.Text;
+                    string category = materialTextBox25.Text;
+
+                    string sInsSotr = string.Format(sInsSql, FIO, seria_nomer, kem_vydan, adress_reg, adress_fact, driver_license, start_day, end_day, numder, GIBDD, category);
+
+                    SqlCommand cmdIns = new SqlCommand(sInsSotr, myConnection);
+
+                    cmdIns.ExecuteNonQuery();
+
+                    MessageBox.Show(string.Format($"{FIO} зпаись успешно добавлена"), "Сообщение");
+
+                    myConnection.Close();
+
+                    this.driverTableAdapter.Fill(this.user127_dbDataSet.driver);
+                    this.driverTableAdapter.Update(this.user127_dbDataSet.driver);
+                    ClearData();
+                }
+            }
+            catch { MessageBox.Show("Ошибка. Проверьте соединение."); }
+        }
+
+        private void materialButton11_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string connectionString = @"data source=stud-mssql.sttec.yar.ru,38325;initial catalog=user127_db;persist security info=True;user id=user127_db;password=user127;MultipleActiveResultSets=True;App=EntityFramework";
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    SqlCommand com = new SqlCommand("UPDATE driver SET FIO=@FIO,seria_nomer=@seria_nomer, kem_vydan=@kem_vydan,adress_reg=@adress_reg,adress_fact=@adress_fact,driver_license=@driver_license,start_day=@start_day,end_day=@end_day,numder=@numder,GIBDD=@GIBDD,category=@category  WHERE id_driver=@id", con);
+
+                    con.Open();
+                    com.Parameters.AddWithValue("@id", id);
+                    com.Parameters.AddWithValue("@FIO", materialTextBox15.Text);
+                    com.Parameters.AddWithValue("@seria_nomer", materialTextBox16.Text);
+                    com.Parameters.AddWithValue("@kem_vydan", materialTextBox17.Text);
+                    com.Parameters.AddWithValue("@adress_reg", materialTextBox18.Text);
+                    com.Parameters.AddWithValue("@adress_fact", materialTextBox19.Text);
+                    com.Parameters.AddWithValue("@driver_license", materialTextBox20.Text);
+                    com.Parameters.AddWithValue("@start_day", materialMaskedTextBox5.Text);
+                    com.Parameters.AddWithValue("@end_day", materialMaskedTextBox6.Text);
+                    com.Parameters.AddWithValue("@numder", materialTextBox23.Text);
+                    com.Parameters.AddWithValue("@GIBDD", materialTextBox24.Text);
+                    com.Parameters.AddWithValue("@category", materialTextBox25.Text);
+
+
+                    com.ExecuteNonQuery();
+                    MessageBox.Show("Запись успешно изменена");
+                    con.Close();
+                    this.driverTableAdapter.Fill(this.user127_dbDataSet.driver);
+                    this.driverTableAdapter.Update(this.user127_dbDataSet.driver);
+                    ClearData();
+                }
+            }
+            catch { MessageBox.Show("Ошибка. Проверьте соединение."); }
+        }
+
+        private void materialButton12_Click(object sender, EventArgs e)
+        {
+            string connectionString = @"data source=stud-mssql.sttec.yar.ru,38325;initial catalog=user127_db;persist security info=True;user id=user127_db;password=user127;MultipleActiveResultSets=True;App=EntityFramework";
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand com = new SqlCommand("DELETE FROM driver WHERE id_driver=@id", con);
+                int id = int.Parse(dataGridView5.CurrentRow.Cells[0].Value.ToString());
+                com.Parameters.AddWithValue("@id", id);
+                con.Open(); //Открываем подключение
+
+                try
+                {
+                    com.ExecuteNonQuery();
+                    MessageBox.Show("Запись удалена");
+                    this.driverTableAdapter.Fill(this.user127_dbDataSet.driver);
+                    this.driverTableAdapter.Update(this.user127_dbDataSet.driver);
+                    this.Refresh();
+                    Application.DoEvents();
+                }
+                catch
+                {
+                    MessageBox.Show("Удалить не удалось!");
+                }
+            }
+        }
+
+        private void dataGridView5_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            id = Convert.ToInt32(dataGridView5.Rows[e.RowIndex].Cells[0].Value.ToString());
+            materialTextBox15.Text = dataGridView5.Rows[e.RowIndex].Cells[1].Value.ToString();
+            materialTextBox16.Text = dataGridView5.Rows[e.RowIndex].Cells[2].Value.ToString();
+            materialTextBox17.Text = dataGridView5.Rows[e.RowIndex].Cells[3].Value.ToString();
+            materialTextBox18.Text = dataGridView5.Rows[e.RowIndex].Cells[4].Value.ToString();
+            materialTextBox19.Text = dataGridView5.Rows[e.RowIndex].Cells[5].Value.ToString();
+            materialTextBox20.Text = dataGridView5.Rows[e.RowIndex].Cells[6].Value.ToString();
+            materialMaskedTextBox5.Text = dataGridView5.Rows[e.RowIndex].Cells[7].Value.ToString();
+            materialMaskedTextBox6.Text = dataGridView5.Rows[e.RowIndex].Cells[8].Value.ToString();
+            materialTextBox23.Text = dataGridView5.Rows[e.RowIndex].Cells[9].Value.ToString();
+            materialTextBox24.Text = dataGridView5.Rows[e.RowIndex].Cells[10].Value.ToString();
+            materialTextBox25.Text = dataGridView5.Rows[e.RowIndex].Cells[11].Value.ToString();
+        }
+
+        private void materialButton13_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!(materialTextBox26.Text.Any(Char.IsLetter)))
+                {
+                    MessageBox.Show(("Поле ремонт должно содержать буквы"), "Сообщение");
+                }
+                else if (materialComboBox7.SelectedItem == "")
+                {
+                    MessageBox.Show(("Поле рег. номер  пустое"), "Сообщение");
+                }
+                else if (!(materialTextBox29.Text.Any(Char.IsDigit)))
+                {
+                    MessageBox.Show(("Поле стоимость должно содержать цифры"), "Сообщение");
+                }
+                else if (materialMaskedTextBox3.Text.Length > 10 || materialMaskedTextBox3.Text.Length < 10)
+                {
+                    MessageBox.Show(("Поле дата поломки заполнено некорректно"), "Сообщение");
+                }
+                else if (materialMaskedTextBox4.Text.Length > 10 || materialMaskedTextBox4.Text.Length < 10)
+                {
+                    MessageBox.Show(("Поле дата ремонта заполнено некорректно"), "Сообщение");
+                }
+                else
+                {
+
+                    string connect = "data source=stud-mssql.sttec.yar.ru,38325;initial catalog=user127_db;persist security info=True;user id=user127_db;password=user127;MultipleActiveResultSets=True;App=EntityFramework";
+
+                    SqlConnection myConnection = new SqlConnection(@connect);
+
+                    myConnection.Open();
+
+                    string command = "Select id_checkup, number, repair, date_start, date_end, price   from checkup where number='" + materialComboBox7.SelectedItem + "' and repair='" + materialTextBox26.Text + "' and date_start='" + materialMaskedTextBox3.Text + "' and date_end='" + materialMaskedTextBox4.Text + "' and price='" + materialTextBox29.Text + "'";
+
+                    string sInsSql = "Insert into checkup(number, repair, date_start, date_end, price ) Values('{0}', '{1}', '{2}', '{3}','{4}')";
+
+                    string number = (string)materialComboBox7.SelectedItem;
+                    string repair = materialTextBox26.Text;
+                    string date_start = materialMaskedTextBox3.Text;
+                    string date_end = materialMaskedTextBox4.Text;
+                    string price = materialTextBox29.Text;
+
+                    string sInsSotr = string.Format(sInsSql, number, repair, date_start, date_end, price);
+
+                    SqlCommand cmdIns = new SqlCommand(sInsSotr, myConnection);
+
+                    cmdIns.ExecuteNonQuery();
+
+                    MessageBox.Show(string.Format($"{number} зпаись успешно добавлена"), "Сообщение");
+
+                    myConnection.Close();
+
+                    this.checkupTableAdapter.Fill(this.user127_dbDataSet.checkup);
+                    this.checkupTableAdapter.Update(this.user127_dbDataSet.checkup);
+                    ClearData();
+                }
+            }
+            catch { MessageBox.Show("Ошибка. Проверьте соединение."); }
+        }
+
+        private void materialButton14_Click(object sender, EventArgs e)
+        { 
+            try
+            {
+                string connectionString = @"data source=stud-mssql.sttec.yar.ru,38325;initial catalog=user127_db;persist security info=True;user id=user127_db;password=user127;MultipleActiveResultSets=True;App=EntityFramework";
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    SqlCommand com = new SqlCommand("UPDATE checkup SET number=@number,repair=@repair, date_start=@date_start,date_end=@date_end,price=@price  WHERE id_checkup=@id", con);
+
+                    con.Open();
+                    com.Parameters.AddWithValue("@id", id);
+                    com.Parameters.AddWithValue("@number", materialComboBox7.SelectedItem);
+                    com.Parameters.AddWithValue("@repair", materialTextBox26.Text);
+                    com.Parameters.AddWithValue("@date_start", materialMaskedTextBox3.Text);
+                    com.Parameters.AddWithValue("@date_end", materialMaskedTextBox4.Text);
+                    com.Parameters.AddWithValue("@price", materialTextBox29.Text);
+
+                    com.ExecuteNonQuery();
+                    MessageBox.Show("Запись успешно изменена");
+                    con.Close();
+                    this.checkupTableAdapter.Fill(this.user127_dbDataSet.checkup);
+                    this.checkupTableAdapter.Update(this.user127_dbDataSet.checkup);
+                    ClearData();
+                }
+            }
+            catch { MessageBox.Show("Ошибка. Проверьте соединение."); }
+        }
+
+        private void materialButton15_Click(object sender, EventArgs e)
+        {
+            string connectionString = @"data source=stud-mssql.sttec.yar.ru,38325;initial catalog=user127_db;persist security info=True;user id=user127_db;password=user127;MultipleActiveResultSets=True;App=EntityFramework";
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand com = new SqlCommand("DELETE FROM checkup WHERE id_checkup=@id", con);
+                int id = int.Parse(dataGridView4.CurrentRow.Cells[0].Value.ToString());
+                com.Parameters.AddWithValue("@id", id);
+                con.Open(); //Открываем подключение
+
+                try
+                {
+                    com.ExecuteNonQuery();
+                    MessageBox.Show("Запись удалена");
+                    this.checkupTableAdapter.Fill(this.user127_dbDataSet.checkup);
+                    this.checkupTableAdapter.Update(this.user127_dbDataSet.checkup);
+                    this.Refresh();
+                    Application.DoEvents();
+                }
+                catch
+                {
+                    MessageBox.Show("Удалить не удалось!");
+                }
+            }
+        }
+
+        private void dataGridView4_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            id = Convert.ToInt32(dataGridView4.Rows[e.RowIndex].Cells[0].Value.ToString());
+            materialComboBox7.SelectedItem = dataGridView4.Rows[e.RowIndex].Cells[2].Value.ToString();
+            materialTextBox26.Text = dataGridView4.Rows[e.RowIndex].Cells[3].Value.ToString();
+            materialMaskedTextBox3.Text = dataGridView4.Rows[e.RowIndex].Cells[4].Value.ToString();
+            materialMaskedTextBox4.Text = dataGridView4.Rows[e.RowIndex].Cells[5].Value.ToString();
+            materialTextBox29.Text = dataGridView4.Rows[e.RowIndex].Cells[6].Value.ToString();
+        }
+
+        private void materialButton16_Click(object sender, EventArgs e)
+        {
+            if(Putevoy_list.Text.Length == 0 || Marka.SelectedIndex == -1
+            || Gos_znak.SelectedIndex == -1 || Expiditor.SelectedIndex == -1
+            || Udostoverenie.SelectedIndex == -1 || Klass.SelectedIndex == -1
+            || Pricep.SelectedIndex == -1 || zakazchik.SelectedIndex == -1
+            || Data_pribitia.SelectedIndex == -1 || Mesto_pogruzki.SelectedIndex == -1
+            || Naimenovanie_gruza.Text.Length == 0 || Rasstoyanie.SelectedIndex == -1
+            || Summa_gsm.SelectedIndex == -1)
+            {
+                MessageBox.Show("Не удалось сформитровать отчет. Все поля должны быть заполнены.");
+                return;
+            }
+
+            ExcelCell[] ExcelCells = new ExcelCell[14];
+            ExcelCells[0] = new ExcelCell(Putevoy_list.Text, 3, 101);
+            ExcelCells[1] = new ExcelCell(Marka.SelectedItem.ToString(), 13, 17);
+            ExcelCells[2] = new ExcelCell(Gos_znak.SelectedItem.ToString(), 14, 28);
+            ExcelCells[3] = new ExcelCell(Expiditor.SelectedItem.ToString(), 15, 9);
+            ExcelCells[4] = new ExcelCell(Udostoverenie.SelectedItem.ToString(), 17, 16);
+            ExcelCells[5] = new ExcelCell(Klass.SelectedItem.ToString(), 17, 45);
+            ExcelCells[6] = new ExcelCell(Pricep.SelectedItem.ToString(), 21, 44);
+            ExcelCells[7] = new ExcelCell(zakazchik.SelectedItem.ToString(), 37, 1);
+            ExcelCells[8] = new ExcelCell(Data_pribitia.SelectedItem.ToString(), 37, 24);
+            ExcelCells[9] = new ExcelCell(Mesto_pogruzki.SelectedItem.ToString(), 37, 46);
+            ExcelCells[10] = new ExcelCell(Mesto_razgruzki.SelectedItem.ToString(), 37, 83);
+            ExcelCells[11] = new ExcelCell(Naimenovanie_gruza.Text, 37, 120);
+            ExcelCells[12] = new ExcelCell(Rasstoyanie.SelectedItem.ToString(), 37, 168);
+            ExcelCells[13] = new ExcelCell(Summa_gsm.SelectedItem.ToString(), 43, 14);
+            
+            string FilePath = Directory.GetCurrentDirectory() + @"\Blank_putevogo_lista_gruzovogo_avtomobilya.xls";
+            if (SimpleExcel.WriteDataToExcel(ExcelCells, FilePath))
+            {
+                MessageBox.Show("Отчет сформирован");
+                System.Diagnostics.Process.Start(FilePath);
+            }
+        }
+
+        private void materialComboBox8_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BindingSource bs = new BindingSource();
+            bs.DataSource = dataGridView2.DataSource;
+            bs.Filter = dataGridView2.Columns[13].HeaderText.ToString() + " LIKE '%" + materialComboBox8.SelectedItem + "%'";
+            dataGridView2.DataSource = bs;
+        }
+    }
+}
+///////////////////////passform
+using MaterialSkin;
+using MaterialSkin.Controls;
+using Microsoft.Office.Interop.Excel;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace trakservice
+{
+    public partial class PassForm : MaterialForm
+    {
+        readonly MaterialSkin.MaterialSkinManager materialSkinManager;
+        public PassForm(SqlConnection con)
+        {
+            this.con = con;
+            InitializeComponent();
+            var materialSkinManager = MaterialSkinManager.Instance;
+            materialSkinManager.AddFormToManage(this);
+            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+            materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.Red700, TextShade.WHITE);
+        }
+        public SqlConnection con;
+
+        private void PassForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void materialButton1_Click(object sender, EventArgs e)
+        {
+            if (materialTextBox1.Text == "4585")
+            {
+                con.Close();
+                mainform mnfrm = new mainform(con);
+                mnfrm.Show();
+                this.Hide();
+            }
+            else
+            {
+                MessageBox.Show("Неверный пароль");
+            }
+          
+        }
+    }
+}
+//////////////////startform
+using MaterialSkin;
+using MaterialSkin.Controls;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace trakservice
+{
+    public partial class start : MaterialForm
+    {
+        public start()
+        {
+            InitializeComponent();
+            var materialSkinManager = MaterialSkinManager.Instance;
+            materialSkinManager.AddFormToManage(this);
+            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+            materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.Red700, TextShade.WHITE);
+        }
+        public String ConnectString;
+        public Exception error = null;
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void materialButton1_Click(object sender, EventArgs e)
+        {
+            ConnectString = "Integrated Security=false;User Id=user127_db;Password=user127;Initial Catalog=user127_db;server=stud-mssql.sttec.yar.ru,38325";
+            SqlConnection con = new SqlConnection(ConnectString);
+            try
+            {
+                con.Open();
+            }
+            catch (Exception ex) 
+            {
+                error = ex; 
+                MessageBox.Show(string.Format("Error: {0}", ex.Message), "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            finally
+            {
+                if (error == null)
+                {
+                    con.Close();
+                    PassForm psf = new PassForm(con);
+                    psf.Show();
+                    this.Hide();
+
+
+                }
+            }
+        }
+    }
+}
+///////////////////////SimpleExcel.cs
+using System;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Runtime.InteropServices;
+using System.IO;
+
+namespace trakservice
+{
+    public static class SimpleExcel
+    {
+        private static Excel.Application xlApp;
+        private static Excel.Workbook xlWorkbook;
+        private static Excel._Worksheet xlWorksheet;
+        private static Excel.Range xlRange;
+
+        public static bool WriteDataToExcel(ExcelCell[] Data, string Path)
+        {
+            if(!File.Exists(Path))
+            {
+                System.Windows.Forms.MessageBox.Show("Путь указан не верно.");
+                return false;
+            }
+
+            xlApp = new Excel.Application();
+            xlWorkbook = xlApp.Workbooks.Open(Path);
+            xlWorksheet = xlWorkbook.Sheets[1];
+            xlRange = xlWorksheet.UsedRange;
+
+            try
+            {
+                for (int i = 0; i < Data.Length; i++)
+                {
+                    if (Data[i] == null)
+                    {
+                        ReleaseExcelData();
+                        throw new Exception($"Данные ячейки {i} заполенены не корректно.");
+                    }
+                    xlWorksheet.Cells[Data[i].row, Data[i].column] = Data[i].value;
+                }
+                xlApp.Visible = false;
+                xlApp.UserControl = false;
+                xlWorkbook.Save();
+
+                ReleaseExcelData();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+                return false;
+            }
+
+            return true;
+        }
+        private static void ReleaseExcelData()
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            Marshal.ReleaseComObject(xlRange);
+            Marshal.ReleaseComObject(xlWorksheet);
+
+            xlWorkbook.Close();
+            Marshal.ReleaseComObject(xlWorkbook);
+
+            xlApp.Quit();
+            Marshal.ReleaseComObject(xlApp);
+        }
+    }
+
+    public class ExcelCell
+    {
+        public ExcelCell(string Value, int Row, int Column)
+        {
+            _Value = Value;
+            _Row = Row;
+            _Column = Column;
+        }
+
+        private int _Row;
+        public int row
+        {
+            get { return _Row; }
+        }
+        private int _Column;
+        public int column
+        {
+            get { return _Column; }
+        }
+        private string _Value;
+        public string value
+        {
+            get { return _Value; }
+        }
+    }
+}
